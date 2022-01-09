@@ -136,21 +136,9 @@ func (m *Repository) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 				} else {
 					log.Println(uInfoError, rq.UserNewInfo.UEmail)
 				}
-
-				eCodeQ, err := m.DataBase.Query("SELECT COUNT(*) FROM `linka_verify_code` WHERE `email` = '" + rq.UserNewInfo.UEmail + "'")
-				if err != nil {
-					json.NewEncoder(w).Encode(&jsonRes)
-					return
-				}
-
-				uMatch := 1
-				for eCodeQ.Next() {
-					eCodeQ.Scan(&uMatch)
-				}
-
 				//fmt.Println(uMatch)
 
-				if uMatch != 1 {
+				if uVerify == 0 {
 					//add verify code
 					newVCode, vCodeError := m.DataBase.Prepare("INSERT INTO `linka_verify_code` VALUES(?, ?)")
 

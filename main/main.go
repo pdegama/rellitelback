@@ -25,7 +25,7 @@ func main() {
 
 	} else {
 
-		//fmt.Println(tools.AesDecrypt("uHhMcWExFdJKzJRZiwjDHw", "17813736645r73er8t4w2c8t"))
+		//fmt.Println(tools.AesDecrypt("chknqRGaIZbTcls9yjHWFQ", "17813736645r73er8t4w2c8t"))
 
 		jsonFile, err := os.Open("/etc/rellitel.ink/main.json")
 
