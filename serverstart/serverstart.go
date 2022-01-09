@@ -3,6 +3,7 @@ package serverstart
 import (
 	"database/sql"
 	"fmt"
+	"linka/config"
 	"linka/handlers"
 	"linka/router"
 	"log"
@@ -19,15 +20,7 @@ var secureCookie = securecookie.New(hashKey, blockKey)
 
 func ServerStart(ListenAddress string){
 	
-	//server start
-	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.SetOutput(file)
-
-	sqliteDatabase, dbError := sql.Open("mysql", "root:@/linka")
+	sqliteDatabase, dbError := sql.Open("mysql", config.AppMainConfig.DataBase.User + ":" + config.AppMainConfig.DataBase.Pass + "@tcp(" + config.AppMainConfig.DataBase.Host + ":3306)/" + config.AppMainConfig.DataBase.Data)
 
 	if dbError != nil {
 		log.Println(dbError)
@@ -35,32 +28,32 @@ func ServerStart(ListenAddress string){
 
 	defer sqliteDatabase.Close()
 
+	//server start
+	file, err := os.OpenFile(config.AppMainConfig.LogFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.SetOutput(file)	
+
 	AppHeaders := make(map[string]string)
 	AppHeaders["Content-Type"] = "application/json"
-	AppHeaders["Access-Control-Allow-Origin"] = "*"
-	AppHeaders["Access-Control-Allow-Headers"] = "*"
+	AppHeaders["Access-Control-Allow-Origin"] = config.AppMainConfig.ACAO
+	AppHeaders["Access-Control-Allow-Headers"] = config.AppMainConfig.ACAH
 
 	handlers.Repo.DataBase = sqliteDatabase
 	handlers.Repo.Headers = &AppHeaders
 	handlers.Repo.SecureCookie = secureCookie
 
-	handlers.Repo.StaticURL = "/home/parthka/Project/linkyflix-master/linka-front/public/pagelogo/"
-	handlers.Repo.StaticURL2 = "/home/parthka/Project/linkyflix-master/linka-front/public/images/"
-	handlers.Repo.FrontURL = "http://app.rellitel.ink/"
-	handlers.Repo.SecKey = "17813736645r73er8t4w2c8t"
-	
-	/* 
-	orig := "Parth@123"
-    fmt.Println("Original text:", orig)
+	handlers.Repo.StaticURL = config.AppMainConfig.StaticPath
+	handlers.Repo.StaticURL2 = config.AppMainConfig.StaticPath2
+	handlers.Repo.FrontURL = config.AppMainConfig.FrontURL
+	handlers.Repo.SecKey = config.AppMainConfig.SecKey
 
-    encryptCode := tools.AesEncrypt(orig, handlers.Repo.SecKey)
-    fmt.Println("Ciphertext:" , encryptCode)
-	*/
-    
-	 /* 
-	decryptCode := tools.AesDecrypt("RIR8M6ZEELyxNsmgvk8Edw", handlers.Repo.SecKey)
-    fmt.Println("Decryption result:", decryptCode)
-	*/
+	//fmt.Println(config.AppMainConfig.StaticPath)
+	//fmt.Println(config.AppMainConfig.StaticPath2)
+	//fmt.Println(config.AppMainConfig.FrontURL)
+	//fmt.Println(config.AppMainConfig.SecKey)
 
 	rh := mux.NewRouter()
 	router.HTTPRouter(rh)
