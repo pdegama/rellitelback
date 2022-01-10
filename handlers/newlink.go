@@ -124,7 +124,7 @@ func (m *Repository) NewLink(w http.ResponseWriter, r *http.Request) {
 			thuImgName := ""
 			if rq.LinkData.ThuExt != "" {
 
-				thuImgName = "thu_" + linkSlug + "." + rq.LinkData.ThuExt
+				thuImgName = "thu_" + fmt.Sprint(pageId) + "_" + linkSlug + "." + rq.LinkData.ThuExt
 				tools.UploadImage(rq.LinkData.ThuImg, m.StaticURL2+thuImgName)
 
 			}
@@ -132,7 +132,7 @@ func (m *Repository) NewLink(w http.ResponseWriter, r *http.Request) {
 			preImgName := ""
 			if rq.LinkData.PreExt != "" {
 
-				preImgName = "pre_" + linkSlug + "." + rq.LinkData.PreExt
+				preImgName = "pre_" + fmt.Sprint(pageId) + "_" + linkSlug + "." + rq.LinkData.PreExt
 				tools.UploadImage(rq.LinkData.PreImg, m.StaticURL2+preImgName)
 
 			}

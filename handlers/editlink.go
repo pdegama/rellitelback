@@ -123,7 +123,7 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 				//linkType = linkType
 			}
 
-			switch rq.LinkData.LinkVisible{
+			switch rq.LinkData.LinkVisible {
 			case "1":
 				linkVisible = 1
 			case "2":
@@ -139,13 +139,13 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 					//fmt.Println(m.StaticURL2 + linkThu)
 					if _, err := os.Stat(m.StaticURL2 + linkThu); errors.Is(err, os.ErrNotExist) {
 					} else {
-						os.Remove(m.StaticURL2 + linkThu)
+						//os.Remove(m.StaticURL2 + linkThu)
 					}
 				}
 				linkThu = ""
 			} else if rq.LinkData.ThuExt != "" {
-				tools.UploadImage(rq.LinkData.ThuImg, m.StaticURL2+"thu_"+rq.LinkSlug+"."+rq.LinkData.ThuExt)
-				linkThu = "thu_" + rq.LinkSlug + "." + rq.LinkData.ThuExt
+				tools.UploadImage(rq.LinkData.ThuImg, m.StaticURL2+"thu_"+fmt.Sprint(pageId)+"_"+rq.LinkSlug+"."+rq.LinkData.ThuExt)
+				linkThu = "thu_" + fmt.Sprint(pageId) + "_" + rq.LinkSlug + "." + rq.LinkData.ThuExt
 			}
 
 			if rq.LinkData.PreCle {
@@ -153,13 +153,13 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 					//fmt.Println(m.StaticURL2 + linkPre)
 					if _, err := os.Stat(m.StaticURL2 + linkPre); errors.Is(err, os.ErrNotExist) {
 					} else {
-						os.Remove(m.StaticURL2 + linkPre)
+						//os.Remove(m.StaticURL2 + linkPre)
 					}
 				}
 				linkPre = ""
 			} else if rq.LinkData.PreExt != "" {
-				tools.UploadImage(rq.LinkData.PreImg, m.StaticURL2+"pre_"+rq.LinkSlug+"."+rq.LinkData.PreExt)
-				linkPre = "pre_" + rq.LinkSlug + "." + rq.LinkData.PreExt
+				tools.UploadImage(rq.LinkData.PreImg, m.StaticURL2+"pre_"+fmt.Sprint(pageId)+"_"+rq.LinkSlug+"."+rq.LinkData.PreExt)
+				linkPre = "pre_" + fmt.Sprint(pageId) + "_" + rq.LinkSlug + "." + rq.LinkData.PreExt
 			}
 
 			//fmt.Println(linkName, linkType, linkDes, linkThu, linkPre)
