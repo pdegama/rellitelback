@@ -86,7 +86,8 @@ func (m *Repository) AllLink(w http.ResponseWriter, r *http.Request) {
 			if rq.LinksQuery == "" {
 				sqlQ1s = "FROM `linka_links` WHERE `username` = '" + eUserName + "' AND `pageid` = " + fmt.Sprint(pageId) + " AND `active` IN (1, 2, 3) ORDER BY `id` DESC"
 			} else {
-				sqlQ1s = "FROM `linka_links` WHERE `username` = '" + eUserName + "' AND `pageid` = " + fmt.Sprint(pageId) + " AND `active` IN (1, 2, 3) AND (`link` LIKE '%" + rq.LinksQuery + "%' OR `name` LIKE '%" + rq.LinksQuery + "%' OR `slug` LIKE '%" + rq.LinksQuery + "%') ORDER BY `id` DESC"
+				sqlQ1s = "FROM `linka_links` WHERE `username` = '" + eUserName + "' AND `pageid` = " + fmt.Sprint(pageId) + " AND `active` IN (1, 2, 3) AND (`name` LIKE '%" + rq.LinksQuery + "%' OR `slug` LIKE '%" + rq.LinksQuery + "%') ORDER BY `id` DESC"
+				//sqlQ1s = "FROM `linka_links` WHERE `username` = '" + eUserName + "' AND `pageid` = " + fmt.Sprint(pageId) + " AND `active` IN (1, 2, 3) AND (`link` LIKE '%" + rq.LinksQuery + "%' OR `name` LIKE '%" + rq.LinksQuery + "%' OR `slug` LIKE '%" + rq.LinksQuery + "%') ORDER BY `id` DESC"
 			}
 
 			//fmt.Println(sqlQ1s)
