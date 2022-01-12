@@ -95,7 +95,7 @@ func (m *Repository) AllLink(w http.ResponseWriter, r *http.Request) {
 				rq.LinksPage = 1
 			}
 
-			infoQ1, err := m.DataBase.Query("SELECT `pageid`, `slug`, `link`, `name`, `type`, `time`, `active`" + sqlQ1s + " LIMIT " + fmt.Sprint((rq.LinksPage-1)*15) + ", 15")
+			infoQ1, err := m.DataBase.Query("SELECT `pageid`, `slug`, `link`, `name`, `type`, `time`, `active` " + sqlQ1s + " LIMIT " + fmt.Sprint((rq.LinksPage-1)*15) + ", 15")
 
 			if err != nil {
 				//log.Println(err)
