@@ -23,14 +23,6 @@ func InstallApp() {
 	output := string(out[:])
 	fmt.Println(output)
 
-	//user display
-	out, err = exec.Command("figlet", "RellBack").Output()
-	if err != nil {
-		fmt.Printf("%s", err)
-	}
-	output = string(out[:])
-	fmt.Println(output)
-
 	//serverstart.ServerStart(":8080")
 
 	//user menu
