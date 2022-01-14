@@ -139,7 +139,25 @@ func (m *Repository) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 				//fmt.Println(uMatch)
 
 				if uVerify == 0 {
-					//add verify code
+
+					//delete vcode
+					emailQ2, err := m.DataBase.Prepare("DELETE FROM `linka_verify_code` WHERE `email` = ?")
+					if err != nil {
+						log.Println("Delete VCode (Update) Error(s) Email: "+rq.UserNewInfo.UEmail, err)
+						jsonRes.Success = false
+						json.NewEncoder(w).Encode(&jsonRes)
+						return
+					}
+
+					_, err = emailQ2.Exec(rq.UserNewInfo.UEmail)
+					if err != nil {
+						log.Println("Delete VCode (Update) Error Email: "+rq.UserNewInfo.UEmail, err)
+						jsonRes.Success = false
+						json.NewEncoder(w).Encode(&jsonRes)
+						return
+					}
+
+					//add vcode
 					newVCode, vCodeError := m.DataBase.Prepare("INSERT INTO `linka_verify_code` VALUES(?, ?)")
 
 					if vCodeError != nil {
