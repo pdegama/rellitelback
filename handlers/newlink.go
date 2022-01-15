@@ -22,6 +22,7 @@ func (m *Repository) NewLink(w http.ResponseWriter, r *http.Request) {
 		ThuExt      string `json:"thu_e"`
 		ThuImg      string `json:"thu_i"`
 		LinkVisible string `json:"l_visible"`
+		LinkCon     string `json:"l_con"`
 	}
 
 	type Req struct {
@@ -107,7 +108,7 @@ func (m *Repository) NewLink(w http.ResponseWriter, r *http.Request) {
 			}
 
 			linkVisible := 1
-			switch rq.LinkData.LinkVisible{
+			switch rq.LinkData.LinkVisible {
 			case "1":
 				linkVisible = 1
 			case "2":
@@ -137,7 +138,7 @@ func (m *Repository) NewLink(w http.ResponseWriter, r *http.Request) {
 
 			}
 
-			inserQ, err := m.DataBase.Prepare("INSERT INTO `linka_links` VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+			inserQ, err := m.DataBase.Prepare("INSERT INTO `linka_links` VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 
 			if err != nil {
 				log.Println(err, "Link No Insert User: "+eUserName)
@@ -146,7 +147,7 @@ func (m *Repository) NewLink(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			_, err = inserQ.Exec(nil, linkSlug, rq.LinkData.LinkURI, linkName, pageId, eUserName, nowT, linkType, rq.LinkData.LinkDes, thuImgName, preImgName, linkVisible)
+			_, err = inserQ.Exec(nil, linkSlug, rq.LinkData.LinkURI, linkName, pageId, eUserName, nowT, linkType, rq.LinkData.LinkDes, thuImgName, preImgName, linkVisible, rq.LinkData.LinkCon)
 
 			if err != nil {
 				log.Println(err, "Link No Insert User: "+eUserName)

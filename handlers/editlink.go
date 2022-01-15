@@ -24,6 +24,7 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 		ThuImg      string `json:"thu_i"`
 		ThuCle      bool   `json:"thu_c"`
 		LinkVisible string `json:"l_visible"`
+		LinkCon     string `json:"l_con"`
 	}
 
 	type Req struct {
@@ -81,7 +82,7 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 
 			//fmt.Println(pageId)
 
-			pageInfoQ, err := m.DataBase.Query("SELECT `name`, `type`, `des`, `thuimg`, `preimg`, `active` FROM `linka_links` WHERE `pageid` = " + fmt.Sprint(pageId) + " AND `slug` = '" + rq.LinkSlug + "'")
+			pageInfoQ, err := m.DataBase.Query("SELECT `name`, `type`, `des`, `thuimg`, `preimg`, `active`, `con` FROM `linka_links` WHERE `pageid` = " + fmt.Sprint(pageId) + " AND `slug` = '" + rq.LinkSlug + "'")
 			if err != nil {
 				log.Println(err)
 				jsonRes.Success = false
@@ -91,13 +92,14 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 
 			linkName := ""
 			linkDes := ""
+			linkCon := ""
 			linkType := 1
 			linkThu := ""
 			linkPre := ""
 			linkVisible := 1
 
 			for pageInfoQ.Next() {
-				pageInfoQ.Scan(&linkName, &linkType, &linkDes, &linkThu, &linkPre, &linkVisible)
+				pageInfoQ.Scan(&linkName, &linkType, &linkDes, &linkThu, &linkPre, &linkVisible, &linkCon)
 			}
 
 			//fmt.Println(linkName, linkType, linkDes, linkThu, linkPre)
@@ -108,6 +110,10 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 
 			if rq.LinkData.LinkDes != "" {
 				linkDes = rq.LinkData.LinkDes
+			}
+
+			if rq.LinkData.LinkCon != "" {
+				linkCon = rq.LinkData.LinkCon
 			}
 
 			switch rq.LinkData.LinkType {
@@ -164,7 +170,7 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 
 			//fmt.Println(linkName, linkType, linkDes, linkThu, linkPre)
 
-			linkEditQ, err := m.DataBase.Prepare("UPDATE `linka_links` SET `name`= ?,`type`= ?,`des`= ?,`thuimg`= ?,`preimg`= ?, `active` = ? WHERE `pageid` = ? AND `slug` = ?")
+			linkEditQ, err := m.DataBase.Prepare("UPDATE `linka_links` SET `name`= ?,`type`= ?,`des`= ?,`thuimg`= ?,`preimg`= ?, `active` = ?, `con` = ? WHERE `pageid` = ? AND `slug` = ?")
 			if err != nil {
 				log.Println(err)
 				jsonRes.Success = false
@@ -172,7 +178,7 @@ func (m *Repository) EditLink(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			_, err = linkEditQ.Exec(linkName, linkType, linkDes, linkThu, linkPre, linkVisible, pageId, rq.LinkSlug)
+			_, err = linkEditQ.Exec(linkName, linkType, linkDes, linkThu, linkPre, linkVisible, linkCon, pageId, rq.LinkSlug)
 
 			if err != nil {
 				log.Println(err)
