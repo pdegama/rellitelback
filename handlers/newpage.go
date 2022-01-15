@@ -24,13 +24,13 @@ func (m *Repository) NewPage(uName string, pName string) bool {
 		}
 	}
 
-	newPage, err2 := m.DataBase.Prepare("INSERT INTO `linka_pages` VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+	newPage, err2 := m.DataBase.Prepare("INSERT INTO `linka_pages` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 
 	if err2 == nil {
 
 		nowTime := time.Now()
 		nowT := nowTime.Format("2006-01-02 15:04:05")
-		_, err := newPage.Exec(nil, pName, mainName, uName, nowT, "{}", "{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"/assets/img/brand/g61.png\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}", 1)
+		_, err := newPage.Exec(nil, pName, mainName, uName, nowT, "{}", "{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"/assets/img/brand/g61.png\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}", 1, 0)
 
 		if err == nil {
 			return true
