@@ -6,10 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"linka/tools"
+	"log"
 	"net/http"
 	"strings"
 	"time"
-	"log"
 )
 
 func (m *Repository) NewUser(w http.ResponseWriter, r *http.Request) {
@@ -117,7 +117,7 @@ func (m *Repository) NewUser(w http.ResponseWriter, r *http.Request) {
 			if newUserAddError == nil {
 
 				jsonRes.Success = true
-				log.Println("User Register", rq.UserData.UserName)
+				log.Println("User Register User: ", rq.UserData.UserName)
 
 			} else {
 
@@ -134,10 +134,23 @@ func (m *Repository) NewUser(w http.ResponseWriter, r *http.Request) {
 				log.Println("User Page Add", rq.UserData.UserName)
 			}
 
+			//add wattet
+			newWattet, err := m.DataBase.Prepare("INSERT INTO `linka_wallet` VALUES(?, ?, ?)")
+			if err != nil {
+				log.Println("Add Wallet Error User (1): "+rq.UserData.UserName, err)
+			}
+
+			_, err = newWattet.Exec(nil, rq.UserData.UserName, 0.00)
+			if err != nil {
+				log.Println("Add Wallet Error User (2): "+rq.UserData.UserName, err)
+			} else {
+				log.Println("Add Wallet User (2): "+rq.UserData.UserName)
+			}
+
 			//delete vcode
 			emailQ2, err := m.DataBase.Prepare("DELETE FROM `linka_verify_code` WHERE `email` = ?")
 			if err != nil {
-				log.Println("Delete VCode Error(s) Email: " + rq.UserData.UserEmail, err)
+				log.Println("Delete VCode Error(s) Email: "+rq.UserData.UserEmail, err)
 			}
 
 			_, err = emailQ2.Exec(rq.UserData.UserEmail)
