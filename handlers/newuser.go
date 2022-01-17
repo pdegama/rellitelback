@@ -129,22 +129,22 @@ func (m *Repository) NewUser(w http.ResponseWriter, r *http.Request) {
 			addPage := m.NewPage(rq.UserData.UserName, rq.UserData.UserPage)
 
 			if !addPage {
-				log.Println("User Page Not Add : " + rq.UserData.UserPage)
+				log.Println("User Page Not Add User: " + rq.UserData.UserPage)
 			} else {
-				log.Println("User Page Add", rq.UserData.UserName)
+				log.Println("User Page Add User:", rq.UserData.UserName)
 			}
 
-			//add wattet
-			newWattet, err := m.DataBase.Prepare("INSERT INTO `linka_wallet` VALUES(?, ?, ?)")
+			//add wallet
+			newWallet, err := m.DataBase.Prepare("INSERT INTO `linka_wallet` VALUES(?, ?, ?)")
 			if err != nil {
 				log.Println("Add Wallet Error User (1): "+rq.UserData.UserName, err)
 			}
 
-			_, err = newWattet.Exec(nil, rq.UserData.UserName, 0.00)
+			_, err = newWallet.Exec(nil, rq.UserData.UserName, 0.00)
 			if err != nil {
 				log.Println("Add Wallet Error User (2): "+rq.UserData.UserName, err)
 			} else {
-				log.Println("Add Wallet User (2): "+rq.UserData.UserName)
+				log.Println("Add Wallet User: "+rq.UserData.UserName)
 			}
 
 			//delete vcode
@@ -174,9 +174,9 @@ func (m *Repository) NewUser(w http.ResponseWriter, r *http.Request) {
 
 			if newCodeError != nil {
 				log.Println(newCodeError)
-				log.Println("User V Code Not Add", rq.UserData.UserName, newCodeError)
+				log.Println("User V Code Not Add User:", rq.UserData.UserName, newCodeError)
 			} else {
-				log.Println("User V Code Add", rq.UserData.UserName)
+				log.Println("User V Code Add User:", rq.UserData.UserName)
 			}
 
 		}
