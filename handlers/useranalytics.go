@@ -47,6 +47,7 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 			PrevSeven     float32    `json:"prev_7"`
 			ChartData     []evStruct `json:"chart_data"`
 			TopLink       []linkD    `json:"top_link"`
+			PageSlug      string     `json:"p_slug"`
 		} `json:"user_analytics"`
 	}
 
@@ -67,6 +68,16 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 
 		if userE {
 
+			//user page
+			uPageQ, err := m.DataBase.Query("SELECT `slug` FROM `linka_pages` WHERE `username` = '" + eUserName + "'")
+			if err != nil {
+				jsonRes.Success = false
+				json.NewEncoder(w).Encode(&jsonRes)
+				return
+			}
+			for uPageQ.Next() {
+				uPageQ.Scan(&jsonRes.UserAnalytics.PageSlug)
+			}
 			//user balance
 			uBal, err := m.DataBase.Query("SELECT `balance` FROM `linka_wallet` WHERE `username` = '" + eUserName + "'")
 
