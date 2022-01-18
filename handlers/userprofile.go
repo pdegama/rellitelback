@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"linka/tools"
 	"linka/tools/auth"
+	"log"
 	"net/http"
 )
 
@@ -74,7 +74,7 @@ func (m *Repository) UserProfile(w http.ResponseWriter, r *http.Request) {
 
 			} else {
 
-				fmt.Println(profileError)
+				log.Println("User Profile Error User: " + userName, profileError)
 
 			}
 
