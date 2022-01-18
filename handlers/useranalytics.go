@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"linka/tools"
 	"linka/tools/auth"
 	"net/http"
@@ -27,6 +28,12 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 		View int     `json:"view"`
 	}
 
+	type linkD struct {
+		Slug  string `json:"l_slug"`
+		Name  string `json:"l_name"`
+		Count int    `json:"l_count"`
+	}
+
 	type resStruct struct {
 		ErrorCode     int32 `json:"error_code"`
 		Success       bool  `json:"success"`
@@ -39,8 +46,7 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 			LastSeven     float32    `json:"last_7"`
 			PrevSeven     float32    `json:"prev_7"`
 			ChartData     []evStruct `json:"chart_data"`
-			UserPhoto     string     `json:"user_photo"`
-			UserVerify    int        `json:"user_verify"`
+			TopLink       []linkD    `json:"top_link"`
 		} `json:"user_analytics"`
 	}
 
@@ -173,7 +179,7 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 				tEV.Date = ""
 				tEV.Earn = 0
 				tEV.View = 0
-				
+
 				for evQ.Next() {
 					tEV.Date = date1
 					evQ.Scan(&tEV.View, &tEV.Earn)
@@ -186,33 +192,63 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 			}
 
 			jsonRes.UserAnalytics.ChartData = cData
-			jsonRes.Success = true
-			/* profileD, profileError := m.DataBase.Query("SELECT `username`, `email`, `fullname`, `verify`, `phone`, `photo` FROM `linka_users` WHERE `username` = '" + userName + "'")
-			if profileError == nil {
 
-				var uName, uEmail, uFullName, uPhone, uPhoto string
-				var uVerify int
+			//top links data
+			tLiID, err := m.DataBase.Query("SELECT DISTINCT `linkid` FROM `linka_analytics` WHERE `username` = '" + eUserName + "' AND `time` >= '" + d7Start + "'")
+			if err != nil {
+				jsonRes.Success = false
+				json.NewEncoder(w).Encode(&jsonRes)
+				return
+			}
 
-				for profileD.Next() {
+			tLId1 := 0
+			lCount := make(map[int]int)
+			for tLiID.Next() {
+				tLiID.Scan(&tLId1)
+				lCount[tLId1] = 0
+			}
 
-					profileD.Scan(&uName, &uEmail, &uFullName, &uVerify, &uPhone, &uPhoto)
+			tLId2 := 0
+			for lID := range lCount {
+				tLiQ2, err := m.DataBase.Query("SELECT COUNT(`linkid`) FROM `linka_analytics` WHERE `username` = '" + eUserName + "' AND `linkid` = " + fmt.Sprint(lID) + " AND `time` >= '" + d7Start + "'")
+				if err != nil {
+					jsonRes.Success = false
+					json.NewEncoder(w).Encode(&jsonRes)
+					return
+				}
+				for tLiQ2.Next() {
+					tLiQ2.Scan(&tLId2)
+					lCount[lID] = tLId2
+				}
+			}
 
+			lCOU := len(lCount)
+			linkList := make([]linkD, lCOU)
+
+			var tLId3 linkD
+			tLId4 := 0
+			for lID, lCO := range lCount {
+				tLiQ3, err := m.DataBase.Query("SELECT `slug`, `name` FROM `linka_links` WHERE `id` = " + fmt.Sprint(lID) + " AND `username` = '" + eUserName + "'")
+				if err != nil {
+					jsonRes.Success = false
+					json.NewEncoder(w).Encode(&jsonRes)
+					return
+				}
+				for tLiQ3.Next() {
+					tLId3.Count = lCO
+					tLiQ3.Scan(&tLId3.Slug, &tLId3.Name)
 				}
 
-				jsonRes.UserInfo.UserName = uName
-				jsonRes.UserInfo.UserEmail = uEmail
-				jsonRes.UserInfo.UserFull = uFullName
-				jsonRes.UserInfo.UserPhone = uPhone
-				jsonRes.UserInfo.UserPhoto = uPhoto
-				jsonRes.UserInfo.UserVerify = uVerify
+				linkList[tLId4] = tLId3
 
-
-			} else {
-
-				fmt.Println(profileError)
+				tLId4++
 
 			}
-			*/
+
+			jsonRes.UserAnalytics.TopLink = linkList
+
+			jsonRes.Success = true
+
 		} else {
 
 			jsonRes.Success = false
