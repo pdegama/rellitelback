@@ -21,20 +21,26 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 
 	SetHeaders(m, w)
 
+	type evStruct struct {
+		Date string  `json:"date"`
+		Earn float32 `json:"earn"`
+		View int     `json:"view"`
+	}
+
 	type resStruct struct {
 		ErrorCode     int32 `json:"error_code"`
 		Success       bool  `json:"success"`
 		UserAnalytics struct {
-			UserBalance   float32 `json:"user_balance"`
-			TodayEarn     float32 `json:"today_earn"`
-			YesterdayEarn float32 `json:"yesterday_earn"`
-			MonthEarn     float32 `json:"month_earn"`
-			LastMEarn     float32 `json:"lastm_earn"`
-			LastSeven     float32 `json:"last_7"`
-			PrevSeven     float32 `json:"prev_7"`
-			UserPhone     string  `json:"user_phone"`
-			UserPhoto     string  `json:"user_photo"`
-			UserVerify    int     `json:"user_verify"`
+			UserBalance   float32    `json:"user_balance"`
+			TodayEarn     float32    `json:"today_earn"`
+			YesterdayEarn float32    `json:"yesterday_earn"`
+			MonthEarn     float32    `json:"month_earn"`
+			LastMEarn     float32    `json:"lastm_earn"`
+			LastSeven     float32    `json:"last_7"`
+			PrevSeven     float32    `json:"prev_7"`
+			ChartData     []evStruct `json:"chart_data"`
+			UserPhoto     string     `json:"user_photo"`
+			UserVerify    int        `json:"user_verify"`
 		} `json:"user_analytics"`
 	}
 
@@ -108,7 +114,7 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 			}
 
 			//last month earning
-			lMStart := time.Date(time.Now().Year(), time.Now().Month() - 1, 1, 0, 0, 0, 0, time.UTC).Format("2006-01-02") //start month time
+			lMStart := time.Date(time.Now().Year(), time.Now().Month()-1, 1, 0, 0, 0, 0, time.UTC).Format("2006-01-02") //start month time
 			lMEarn, err := m.DataBase.Query("SELECT sum(`por`) FROM `linka_analytics` WHERE `username` = '" + eUserName + "' AND `time` >= '" + lMStart + "' AND `time` <= '" + mStart + "'")
 			if err != nil {
 				jsonRes.Success = false
@@ -146,6 +152,40 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 				p7Earn.Scan(&jsonRes.UserAnalytics.PrevSeven)
 			}
 
+			//get chart deta
+			cData := make([]evStruct, 31)
+			monthDay := tools.DaysIn(time.Now().Month(), time.Now().Year())
+			dynDate := time.Now().AddDate(0, 0, -monthDay+1)
+			var tEV evStruct
+			for sInd := 0; sInd < monthDay; {
+				//log.Println(dynDate.Format("2006-01-02"), dynDate.AddDate(0, 0, 1).Format("2006-01-02"))
+
+				date1 := dynDate.Format("2006-01-02")
+				date2 := dynDate.AddDate(0, 0, 1).Format("2006-01-02")
+
+				evQ, err := m.DataBase.Query("SELECT COUNT(*), sum(`por`) FROM `linka_analytics` WHERE `username` = '" + eUserName + "' AND `time` >= '" + date1 + "' AND `time` <= '" + date2 + "'")
+				if err != nil {
+					jsonRes.Success = false
+					json.NewEncoder(w).Encode(&jsonRes)
+					return
+				}
+
+				tEV.Date = ""
+				tEV.Earn = 0
+				tEV.View = 0
+				
+				for evQ.Next() {
+					tEV.Date = date1
+					evQ.Scan(&tEV.View, &tEV.Earn)
+				}
+
+				cData[sInd] = tEV
+
+				dynDate = dynDate.AddDate(0, 0, 1)
+				sInd++
+			}
+
+			jsonRes.UserAnalytics.ChartData = cData
 			jsonRes.Success = true
 			/* profileD, profileError := m.DataBase.Query("SELECT `username`, `email`, `fullname`, `verify`, `phone`, `photo` FROM `linka_users` WHERE `username` = '" + userName + "'")
 			if profileError == nil {
