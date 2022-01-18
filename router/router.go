@@ -11,6 +11,7 @@ func HTTPRouter(rh *mux.Router) {
 	rh.HandleFunc("/", handlers.Repo.MainAuth)
 	rh.HandleFunc("/newuser", handlers.Repo.NewUser)
 	rh.HandleFunc("/authuser", handlers.Repo.AuthUser)
+	rh.HandleFunc("/analytics", handlers.Repo.UserAnalytics)
 	rh.HandleFunc("/link", handlers.Repo.AllLink)
 	rh.HandleFunc("/link/new", handlers.Repo.NewLink)
 	rh.HandleFunc("/link/edit", handlers.Repo.EditLink)
