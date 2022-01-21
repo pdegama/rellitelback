@@ -24,6 +24,8 @@ func HTTPRouter(rh *mux.Router) {
 	rh.HandleFunc("/profile/update", handlers.Repo.UpdateProfile)
 	rh.HandleFunc("/profile/password", handlers.Repo.NewPassword)
 	rh.HandleFunc("/profile/photo", handlers.Repo.ProfilePhoto)
+	rh.HandleFunc("/walletb", handlers.Repo.Wallet)
+	rh.HandleFunc("/withdraw", handlers.Repo.Withdraw)
 	rh.HandleFunc("/verify", handlers.Repo.Verify)
 	rh.HandleFunc("/forgot", handlers.Repo.ForgotPass)
 	rh.HandleFunc("/reset", handlers.Repo.ResetPass)
