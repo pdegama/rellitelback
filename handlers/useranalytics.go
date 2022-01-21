@@ -34,6 +34,11 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 		Count int    `json:"l_count"`
 	}
 
+	type userNStr struct {
+		Title string `json:"title"`
+		URL   string `json:"url"`
+	}
+
 	type resStruct struct {
 		ErrorCode     int32 `json:"error_code"`
 		Success       bool  `json:"success"`
@@ -48,6 +53,7 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 			ChartData     []evStruct `json:"chart_data"`
 			TopLink       []linkD    `json:"top_link"`
 			PageSlug      string     `json:"p_slug"`
+			UserNews      []userNStr `json:"user_news"`
 		} `json:"user_analytics"`
 	}
 
@@ -257,6 +263,26 @@ func (m *Repository) UserAnalytics(w http.ResponseWriter, r *http.Request) {
 			}
 
 			jsonRes.UserAnalytics.TopLink = linkList
+
+			//get user news
+			userNewsQ, err := m.DataBase.Query("SELECT * FROM `linka_news` LIMIT 0, 10")
+			if err != nil {
+				jsonRes.Success = false
+				json.NewEncoder(w).Encode(&jsonRes)
+				return
+			}
+			
+			var tNews userNStr
+			jsonRes.UserAnalytics.UserNews = make([]userNStr, 10)
+			tV4 := 0
+			for userNewsQ.Next() {
+				if tV4 == 10 {
+					break
+				}
+				userNewsQ.Scan(&tNews.Title, &tNews.URL)
+				jsonRes.UserAnalytics.UserNews[tV4] = tNews
+				tV4 ++
+			}
 
 			jsonRes.Success = true
 
