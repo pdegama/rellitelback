@@ -34,7 +34,6 @@ func (m *Repository) Wallet(w http.ResponseWriter, r *http.Request) {
 		UserBalance float32   `json:"user_balance"`
 		Panding     int       `json:"user_panding"`
 		WithTable   []withTab `json:"user_withtable"`
-		WithCon     int       `json:"user_withcon"`
 	}
 
 	if rq.BrowserCode == "" {
@@ -91,7 +90,7 @@ func (m *Repository) Wallet(w http.ResponseWriter, r *http.Request) {
 				withTabData[tI] = tJ
 				tI++
 			}
-			jsonRes.WithCon = tI
+
 			jsonRes.WithTable = withTabData
 			jsonRes.Success = true
 
