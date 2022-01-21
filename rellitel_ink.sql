@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 19, 2022 at 04:27 PM
+-- Generation Time: Jan 21, 2022 at 02:55 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -96,7 +96,9 @@ INSERT INTO `linka_analytics` (`id`, `username`, `pageid`, `linkid`, `time`, `cp
 (56, 'parthka', 1, 65, '2022-01-19 11:19:14', 0.003, 0.003, 1),
 (57, 'parthka', 1, 82, '2022-01-19 11:19:41', 0.003, 0.00175862, 1),
 (58, 'parthka', 1, 65, '2022-01-19 11:19:57', 0.003, 0.003, 1),
-(59, 'parthka', 1, 79, '2022-01-19 11:36:34', 0.003, 0.00134483, 1);
+(59, 'parthka', 1, 79, '2022-01-19 11:36:34', 0.003, 0.00134483, 1),
+(60, 'parthka', 1, 93, '2022-01-20 11:50:37', 0.003, 0.00217241, 1),
+(61, 'parthka', 1, 65, '2022-01-21 10:30:56', 5, 2.06897, 1);
 
 -- --------------------------------------------------------
 
@@ -230,7 +232,28 @@ INSERT INTO `linka_links` (`id`, `slug`, `link`, `name`, `pageid`, `username`, `
 (93, 'KwUMoa5S', 'http://app.rellitel.ink/dashboard/new', 'untitled', 1, 'parthka', '2022-01-19 09:38:08', 1, '', '', '', 1, ''),
 (94, '4VZlr9bU', 'http://app.rellitel.ink/', 'untitled', 1, 'parthka', '2022-01-19 09:38:32', 1, '', '', '', 1, ''),
 (95, 'F2lCCzFc', 'http://app.rellitel.ink/dashboard/new', 'untitled', 8, 'parthka7', '2022-01-19 10:19:54', 1, '', '', '', 0, ''),
-(96, '48bzlmW3', 'http://app.rellitel.ink/dashboard/links', 'untitled', 8, 'parthka7', '2022-01-19 10:50:16', 1, '', '', '', 1, '');
+(96, '48bzlmW3', 'http://app.rellitel.ink/dashboard/links', 'untitled', 8, 'parthka7', '2022-01-19 10:50:16', 1, '', '', '', 1, ''),
+(97, 'F2lCCzFc', 'http://app.rellitel.ink/dashboard/new', 'untitled', 1, 'parthka', '2022-01-20 12:54:21', 1, 'fdfsdf', '', '', 1, 'sdfsdfsdfsdf'),
+(98, '48bzlmW3', 'http://app.rellitel.ink/dashboard/new', 'untitled', 1, 'parthka', '2022-01-20 14:00:09', 1, '', 'thu_1_48bzlmW3.png', '', 1, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `linka_news`
+--
+
+CREATE TABLE `linka_news` (
+  `name` text NOT NULL,
+  `link` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `linka_news`
+--
+
+INSERT INTO `linka_news` (`name`, `link`) VALUES
+('Change CPC 5 to 6', ''),
+('new interface', 'http://rellitel.ink/');
 
 -- --------------------------------------------------------
 
@@ -255,7 +278,7 @@ CREATE TABLE `linka_pages` (
 --
 
 INSERT INTO `linka_pages` (`id`, `name`, `slug`, `username`, `time`, `cat`, `info`, `theme`, `adult`) VALUES
-(1, 'parthka\'s Page', 'movieflix', 'parthka', '2022-01-15 21:34:28', '{}', '{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"1_2\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}', 1, 0),
+(1, 'parthka\'s Page', 'movieflix', 'parthka', '2022-01-15 21:34:28', '{}', '{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"1_2\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}', 3, 0),
 (2, 'parthkao\'s Page', 'parthkaos-page', 'parthkao', '2022-01-15 21:36:01', '{}', '{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"/assets/img/brand/g61.png\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}', 1, 0),
 (3, '78612386\'s Page', '78612386s-page', '78612386', '2022-01-16 15:14:22', '{}', '{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"/assets/img/brand/g61.png\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}', 1, 0),
 (4, 'parthka2\'s Page', 'parthka2s-page', 'parthka2', '2022-01-17 21:17:10', '{}', '{\"logo\":\"/assets/img/brand/g61.png\",\"logo2\":\"/assets/img/brand/g61.png\",\"des\":\"\",\"seo\":true,\"social\":{\"yt\":\"#\",\"tg\":\"#\",\"fb\":\"#\",\"ig\":\"#\"}}', 1, 0),
@@ -300,10 +323,10 @@ CREATE TABLE `linka_users` (
 --
 
 INSERT INTO `linka_users` (`id`, `username`, `email`, `password`, `fullname`, `verify`, `phone`, `photo`, `time`) VALUES
-(1, 'parthka', 'parthka.2005@gmail.com', '1SxKpmIJab9bOxU1uHeFLw', 'parthka boss', 1, '8866881066', NULL, '2022-01-15 21:34:28'),
+(1, 'parthka', 'parthka.2005@gmail.com', 'axb8fBIFALZJMViRD0LjCw', 'parthka boss', 1, '8866881066', NULL, '2022-01-15 21:34:28'),
 (2, 'parthkao', 'parthka2@gmail.com', '1SxKpmIJab9bOxU1uHeFLw', 'parthkao', 0, NULL, NULL, '2022-01-15 21:36:01'),
-(3, '78612386', 'parthka.2005@gmail.co', 'RhPlDZCvTrAJXqJXW0jWJQ', '78612386', 0, NULL, NULL, '2022-01-16 15:14:22'),
-(4, 'parthka2', 'parth@123.com', '1SxKpmIJab9bOxU1uHeFLw', 'parthka2', 0, NULL, NULL, '2022-01-17 21:17:10'),
+(3, '78612386', 'parthka.2005@gmail.co', 'RhPlDZCvTrAJXqJXW0jWJQ', '78612386', 1, NULL, NULL, '2022-01-16 15:14:22'),
+(4, 'parthka2', 'parth@123.com', 'axb8fBIFALZJMViRD0LjCw', 'parthka2', 0, NULL, NULL, '2022-01-17 21:17:10'),
 (5, 'parthka3', 'parthkj@123.com', '1SxKpmIJab9bOxU1uHeFLw', 'parthka3', 0, NULL, NULL, '2022-01-17 21:18:30'),
 (6, 'parthka5', 'parth@4267.com', '1SxKpmIJab9bOxU1uHeFLw', 'parthka5', 0, NULL, NULL, '2022-01-18 09:29:30'),
 (7, 'parthka6', 'parth@123456.com', '1SxKpmIJab9bOxU1uHeFLw', 'parthka6', 0, NULL, NULL, '2022-01-19 09:31:53'),
@@ -345,7 +368,17 @@ INSERT INTO `linka_user_token` (`token`, `username`) VALUES
 ('MTY0MjU2NzA4MXw2SHpMTFIwVkFPQVhkeWNzSWJ2bnpadVdRb1RSdHVhVURNdEdRdFo4NUdZMTZldjVpeGpCZ0NtV050T3ktZTJFS1VPSzBvNkh0VFdJdXdHTnZJQkRrTnBzT19reUsxTVZ2QT09fLavTB_UzbzPzbw2jm_HHwz54Eai_-duEw8Zhj-mG06X', 'parthka7'),
 ('MTY0MjU3MDc1OHxyVkFSeTBYd0dIU0stWDYzdXlGaldfSjEyZ0h6SF85U2VBOG5LRzdzZzdWYzA1Qm5NN0NlMktoQ29SY1RTeHBaX2NiTndGQk5uRUVNc1dPdTJLczZZOWNHLXg4cTlxcFFnUT09fCN5CjrSudizy8D2pSBJGlCOM-yhFrkjcGlTEPrgKvVh', 'parthka6'),
 ('MTY0MjU3MjM0NHx5Vy1UMlZ2ekhjWGs4M21CMXhqSHJINUlKSFJqYXcyUnJIR1g3ZnkybnYtZlY2aDAxV1dtYWF2b0NxMGtmS0kwMlJ1UTJ1ZHJtWE9TWlB6dmZ3cnZqS3dVZFBPMVlqek5VUT09fEfJMzC3seAcUMeSe7-_2oKL2ECap59VfN_AUWox39uy', 'parthka6'),
-('MTY0MjU3NjY5M3w0c3RTS3hmaEJOR0tzM0wyOEJaVXpjRXdESTk0bHJReVJHOTRJcS16WmtEVlJDUnA5N00tX2diZklCNlg1MWlxQXhDMzNIRzIyU0ZjWHNHMlJfVjdqNFRqNzBBMWJEWFJ8jsCOmqdZPaJ6XPgi0rlb7u-erq4ruv56FhL0RMfRvFo=', 'parthka');
+('MTY0MjU3NjY5M3w0c3RTS3hmaEJOR0tzM0wyOEJaVXpjRXdESTk0bHJReVJHOTRJcS16WmtEVlJDUnA5N00tX2diZklCNlg1MWlxQXhDMzNIRzIyU0ZjWHNHMlJfVjdqNFRqNzBBMWJEWFJ8jsCOmqdZPaJ6XPgi0rlb7u-erq4ruv56FhL0RMfRvFo=', 'parthka'),
+('MTY0MjY2NDQ5MnxpXzFSeE1CaFhQcFVUR29NWWNkX3dWcndZOFRNTU1hcXZ2TFhzendGaVlNRFVVRHVBOTlvdHIxaU5fUnZrUUhETVJJYmpSdkVaSEFYNVpOUXhQZm92RVdpR1F5NEpvSlV87SuMYCUBTD7nkAWO-SEcu2sGRZklkz8me1nDeZcT2xE=', 'parthka'),
+('MTY0MjY5MDIyOXxmMHVEcThGdXZVTzlIekxCMzRGeGtPYWVsU1lrMHFzZlFGLXZpXy1MSXlwc3FnOWNLU0x1YWRranlpekstcE43cnVUMUdPaldnMmdSNTZnUk52VndoYWRoNVM3NUNHQnF8PqSMrwiYl0QD92DLf5sWtS_qtrCMPIhOarpsS_L6zF8=', 'parthka'),
+('MTY0MjY5MjYwMXwwbHBiRHc1dloyQ296QXVEYVZiVW1WX04zRkZUcmFtMHdleWtPU2VuQWREMVJJX0ZXME5INXNYVjlOQXdROWRKUS1fME9CTllnOGtaVHYyWGVobTZXNUtXcXEtVzd6Q0F8kcbtEWEh3k2MQOyEbHG-r6UwV9ctqWJN16mhJq9Vx4c=', 'parthka'),
+('MTY0MjY5NDIxOHxJQ2N5Z0M3bHBzR0l3QXVSTWdPY19pRTc1aURqWEtsX2o3SHlUZkVSSkkwbzB5bjdfMWlucTJpSXFNaVVBSF9uLXF5eXYxVnJzZ2RFdEhqUndpTWY2UnlYUHktTVhlSWZ8hru-Cza1L0OVt5-ZeCycbCXObxbDz6x8uADI0i5CEsw=', 'parthka'),
+('MTY0MjczNjU4N3xBSmluTl9kRWl1SXlNUXREcllTRHMxNkVDckpUOWN6V1J0SGhFcVpHSVJZLWF6V2VsQ3ppNEtsWUF3NnhQM2RCUjZJSVg2WnlIeUVSSjNfcWI1OVZTeVJ5cUluZE1jaWF8bpag5DfIt9stJ6xFMaP48oMfWtRv6kiLB9xHbDa76nU=', 'parthka'),
+('MTY0MjczNjkzMXxUZW14WVJXV2k0S3g5OVB6OUliS0lLd0xjbFlyRmwxcVJlby16NFVCSmFjZTBDM0taM0tncnd2NXNUSnpSOUFGMloyTkp4Yk5PNTZBd0VJLXhQTnQwNER2eEMtSDhhbjR8rTPrHmpYjIQrMJbvdSH226_7uvED92_eRqrxwAdUJe0=', 'parthka'),
+('MTY0Mjc0MTE4Nnw1cU1fYmZEbWM2elZpMGsxellTM3hTM2NrTzkwbE9xV1lueDdJbkJid0NndlRWOXdaNkk5bTNwcHd4dVpkUTM5dkpzRG5qVTg5Rms3OVR0OHk1R0hGWWh4Y1VjempaeFV8K_w6YiWzKBOcET2cNTMr3khBc5ilhygZTO4pOTZ-s6g=', 'parthka'),
+('MTY0Mjc0ODU1OXxHQ2Y3YkExWDcyeG8wSGgzQnBxa3lCOUVxVF84TTdpZGVqSGs3am4yS3pIOF9JaFhYRWVKYnNnZXhmZ0Q2ZFE4Nkdyd3VEeFlfV3lpZTBITko1LURRYjE3NmdmV2JKRU18bPgJFrp_25KxkqtG3P7-MmppkFWFheqzZzoyys77i8U=', 'parthka'),
+('MTY0Mjc0OTg4NnxIUnRVcTIwTXVkamtCMUllTVpWbERmQ3N5OFN4MmI0SW41WHZJc21HTHlRVFg2cDRXSlBmamdEakpod003V3dHN1BlRjdYVE1kUjR4ekpDbE1IdWwtRm56andLYzZVdVdnQT09fIdwNG-yhsO1xgIPaydh0T9vvcGYIq51ljuBIsxnzv2z', 'parthka2'),
+('MTY0Mjc3MzI2N3xrck1xUnhuNXhUMldxYUJzZ0l0UGNocnhrQVQzblR6SHA1M19oclZqQWYtUzJGRlB0X0VhNlFUT1hqTko5MlRfc0hOd0NEazEycnRHcDNaVVNlWUp4TXNLVGVtMEppa2lPdz09fKau76N4bKdXIycE1NuhYganAOo3V7cS4wgwVvQVpxyy', 'parthka2');
 
 -- --------------------------------------------------------
 
@@ -364,7 +397,6 @@ CREATE TABLE `linka_verify_code` (
 
 INSERT INTO `linka_verify_code` (`email`, `code`) VALUES
 ('parthka2@gmail.com', 'RTZMRDWQ4SZKRFECWRSGFUGCV3XOVMTEOLU'),
-('parthka.2005@gmail.co', 'TLKIF3U4VKCNZRFORTQMJBTK2TCO46T2==='),
 ('parth@123.com', 'R2GPFSEO2CBJVKES6SMNVHHMYSRHU6Q===='),
 ('parthkj@123.com', 'UTPMEZHAQKNKREXUTDNJZ3GEUJ5HU======'),
 ('parth@4267.com', 'SCCNBRW4UTPKFCFC6KONJRXKWJSHF2A===='),
@@ -388,14 +420,49 @@ CREATE TABLE `linka_wallet` (
 --
 
 INSERT INTO `linka_wallet` (`id`, `username`, `balance`) VALUES
-(1, 'parthka', 0.0894827),
+(1, 'parthka', 317),
 (2, 'parthkao', 0.196552),
 (3, '78612386', 0.477103),
-(4, 'parthka2', 0.006),
+(4, 'parthka2', 33),
 (5, 'parthka3', 0),
 (6, 'parthka5', 0.00165517),
 (7, 'parthka6', 0.0032069),
 (8, 'parthka7', 0.003);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `linka_withdraw`
+--
+
+CREATE TABLE `linka_withdraw` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `nowbal` float NOT NULL,
+  `por` int(11) NOT NULL,
+  `pom` text NOT NULL,
+  `poa` text NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `linka_withdraw`
+--
+
+INSERT INTO `linka_withdraw` (`id`, `username`, `nowbal`, `por`, `pom`, `poa`, `date`, `status`) VALUES
+(1, 'parthka', 5.222, 4, 'paypal', 'parthka.2005@gmail.com', '2022-01-21 12:46:51', 1),
+(2, 'parthka', 503, 5, 'phonepe', '8866881066', '2022-01-21 12:47:24', 0),
+(3, 'parthka', 500, 5, 'paypal', 'parthka.2005@gmail.com', '2022-01-21 12:51:40', 1),
+(4, 'parthka', 495, 4, 'paypal', 'parthka.2005@gmail.com', '2022-01-21 12:53:08', 1),
+(5, 'parthka', 491, 7, 'paypal', 'parthka.2005@gmail.com', '2022-01-21 12:53:51', 1),
+(6, 'parthka2', 50, 17, 'google', 'parthka.2005@gmail.com', '2022-01-21 12:55:13', 1),
+(7, 'parthka', 484, 3, 'paypal', 'parthka.2005@gmail.com', '2022-01-21 12:56:07', 1),
+(8, 'parthka', 481, 10, 'upi', 'parthka.2005@gmail.com', '2022-01-21 13:01:00', 1),
+(9, 'parthka', 471, 8, 'upi', '8866881066@122', '2022-01-21 13:44:27', 1),
+(10, 'parthka', 463, 123, 'google', 'parthka.2005@gmail.com', '2022-01-21 18:00:43', 1),
+(11, 'parthka', 340, 12, 'upi', 'parthka.2005@gmail.com', '2022-01-21 18:04:54', 1),
+(12, 'parthka', 328, 11, 'amazon', 'parthka@helka.com', '2022-01-21 18:47:36', 0);
 
 --
 -- Indexes for dumped tables
@@ -438,6 +505,12 @@ ALTER TABLE `linka_wallet`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `linka_withdraw`
+--
+ALTER TABLE `linka_withdraw`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -445,13 +518,13 @@ ALTER TABLE `linka_wallet`
 -- AUTO_INCREMENT for table `linka_analytics`
 --
 ALTER TABLE `linka_analytics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `linka_links`
 --
 ALTER TABLE `linka_links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `linka_pages`
@@ -476,6 +549,12 @@ ALTER TABLE `linka_users`
 --
 ALTER TABLE `linka_wallet`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `linka_withdraw`
+--
+ALTER TABLE `linka_withdraw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
